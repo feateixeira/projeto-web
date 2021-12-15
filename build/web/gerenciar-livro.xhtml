@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="template.xhtml">
+
+
+    <h:form>
+        
+        <p:messages showDetail="true"></p:messages>
+        <p:fieldset legend="Pagina de cadastro de livros">
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="Novo Livro" action="#{livroBean.novo()}" update="@form"></p:commandButton>
+                    <p:commandButton value="Salvar" action="#{livroBean.salvar()}" disabled="#{livroBean.busca == true}" update="@form"></p:commandButton>
+                    <p:commandButton value="Buscar" action="#{livroBean.buscar()}" update="@form"></p:commandButton>
+                </p:toolbarGroup>
+            </p:toolbar><br></br>
+            <p:panelGrid columns="2" rendered="#{livroBean.busca == false}">
+                <h:outputLabel value="Título:"></h:outputLabel>
+                <p:inputText id="titulo" value="#{livroBean.entidade.titulo}"></p:inputText>
+
+                <h:outputLabel value="Autor:"></h:outputLabel>
+                <p:inputText id="autor" value="#{livroBean.entidade.autor}"></p:inputText>
+
+                <h:outputLabel  value="Editora:"></h:outputLabel>
+                <p:inputText id="editora" value="#{livroBean.entidade.editora}"></p:inputText>
+
+                <h:outputLabel value="Ano de Publicação:"></h:outputLabel>
+                <p:inputText value="#{livroBean.entidade.anoPubli}" ></p:inputText>
+            </p:panelGrid>
+
+            <p:dataTable value="#{livroBean.entidades}" var="livro" rendered="#{livroBean.busca == true}">
+                <p:column>
+                    <p:commandButton value="Editar" action="#{livroBean.editar(livro)}" update="@form"></p:commandButton>
+                    <p:commandButton value="Deletar" action="#{livroBean.deletar(livro)}" update="@form"></p:commandButton>
+                </p:column>
+                <p:column headerText="Título:" sortBy="#{livro.titulo}">
+                    <h:outputText value="#{livro.titulo}"></h:outputText>
+                </p:column>
+                <p:column headerText="Autor:" sortBy="#{livro.autor}">
+                    <h:outputText value="#{livro.autor}"></h:outputText>
+                </p:column>
+                <p:column headerText="Editora:" sortBy="#{livro.editora}">
+                    <h:outputText value="#{livro.editora}"></h:outputText>
+                </p:column>
+                <p:column headerText="Ano Publicação:" sortBy="#{livro.anoPubli}">
+                    <h:outputText value="#{livro.anoPubli}"></h:outputText>
+                </p:column>
+            </p:dataTable>
+        </p:fieldset>
+
+    </h:form> 
+
+
+</ui:decorate>
+
